@@ -51,8 +51,36 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
-        var newComputationObj = {};
+        let output = getMetricGroupName(computationObj.output.metric)
+        let newComputationObj = {
+            "output": {
+                "metric" : output,
+                "unit" : CONSTANTS.METRIC_CONVERTION[output].base
+            },
+            "input": {}
+        };
+        for (let key in computationObj.input) {
+            let input = getMetricGroupName(key);
+            let unit = computationObj.input[key].unit;
+            let val = computationObj.input[key].value;
+            if(CONSTANTS.METRIC_CONVERTION[input].base != unit) {
+                let valueFunction = CONSTANTS.METRIC_CONVERTION[input].convertions[unit];
+                val = valueFunction(computationObj.input[key].value);
+            }
+            newComputationObj.input[input] = {
+                "value": val,
+                "unit" : CONSTANTS.METRIC_CONVERTION[input].base
+            }
+        }
         return newComputationObj;
+    }
+    // Traverse and obtain the metric group name
+    var getMetricGroupName = function(val){
+        for (var key in CONSTANTS.METRIC_GROUP) {
+            if(key == val || CONSTANTS.METRIC_GROUP[key].includes(val)){
+                return key;
+            }
+        }
     }
 
     // Step 1: Process Input
