@@ -49,6 +49,7 @@ var EINSTEIN_SERVICE = (function(){
         }
     }
 
+    // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
         var newComputationObj = {};
         return newComputationObj;
