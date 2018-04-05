@@ -3,6 +3,7 @@ var serviceAccount = require("./firebase-admin-sdk.json");
 
 
 var SAMPLE_SERVICE = require('./services/sampleService.js');
+var EINSTEIN_ENGINE = require('./services/einsteinEngine.js');
 
 // Initialize Firebase
 firebase.initializeApp({
@@ -32,7 +33,7 @@ express()
           console.log(id);
           // Call to your Service
           var data = SAMPLE_SERVICE.getTestData();
-          
+
           // To send response back
           res.send(data);
           // To resolve the Promise
@@ -40,6 +41,19 @@ express()
           
       }); 
   })
+
+  .get('/execute', function(req, res){
+    return new Promise((resolve, reject) => {
+        // Call to your Service
+        var data = EINSTEIN_ENGINE.execute("Sample Text");
+
+        // To send response back
+        res.send(data);
+        // To resolve the Promise
+        resolve();
+        
+    }); 
+})
 
 
 
