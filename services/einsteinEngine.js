@@ -33,7 +33,6 @@ var EINSTEIN_SERVICE = (function(){
         for (let k in obj.input) {
             checkList.push(k);
         }
-        console.log(checkList);
         let flag = true;
         let result = "";
         let missingValues = [];
@@ -43,32 +42,35 @@ var EINSTEIN_SERVICE = (function(){
             "data": {}
         }
         
-        for (let key in CONSTANTS.FORMULAS) {    
-            do{
-                flag = true;
-                for(let i = 0; i < checkList.length; i++){
-                    if (CONSTANTS.FORMULAS[key].group.includes(checkList[i])) {
-                        result = key;
-                    } else {
-                        flag = false;
-                        break;
-                    }
+            
+        
+        flag = true;
+        for (let key in CONSTANTS.FORMULAS) {
+            
+            for(let i = 0; i < checkList.length; i++){
+                if (CONSTANTS.FORMULAS[key].group.includes(checkList[i])) {
+                    result = key;
+                    flag = true;
+                } else {
+                    flag = false;
+                    break;
                 }
-                if(flag){
-                    if(CONSTANTS.FORMULAS[key].group.length != checkList.length){
-                        missingValues = reportMissingValues(result, checkList);
-                        report.isMissing = true;
-                        report.missingData = missingValues;
-                    } else {
-                        report.isMissing = false;
-                        report.data = result;
-                    }
+            }
+            if(flag){
+                if(CONSTANTS.FORMULAS[key].group.length != checkList.length){
+                    missingValues = reportMissingValues(result, checkList);
+                    report.isMissing = true;
+                    report.missingData = missingValues;
+                } else {
+                    report.isMissing = false;
+                    report.data = result;
+                    break;
                 }
-            }while(!flag);
-            console.log("report:");
-            console.log(report);
-            return report;
+            }
         }
+        console.log("report:");
+        console.log(report);
+        return report;
     }
 
     var reportMissingValues = function(key, checkList){
@@ -84,7 +86,6 @@ var EINSTEIN_SERVICE = (function(){
     // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
         let output = getMetricGroupName(computationObj.output.metric);
-        console.log(CONSTANTS.METRIC_CONVERTION[output].base);
         let newComputationObj = {
             "output": {
                 "metric" : output,
@@ -96,7 +97,7 @@ var EINSTEIN_SERVICE = (function(){
             let input = getMetricGroupName(key);
             let unit = computationObj.input[key].unit;
             let val = computationObj.input[key].value;
-            console.log("input:unit:val "+input+":"+unit+":"+val);
+            //console.log("input:unit:val "+input+":"+unit+":"+val);
             if(CONSTANTS.METRIC_CONVERTION[input].base != unit) {
                 let valueFunction = CONSTANTS.METRIC_CONVERTION[input].convertions[unit];
                 val = valueFunction(computationObj.input[key].value);
@@ -126,10 +127,9 @@ var EINSTEIN_SERVICE = (function(){
     var execute = function(string){
         var response = {};
        // string = "what is the speed of the train if it is travelling at a distance of 10 km in 2 hours";
-        console.log("context: "+context);
         if(context!=null){
             string = context + string;
-            console.log("string: "+string);
+            context = null;
         }
         var computationObj = processInput(string);
         console.log(computationObj);
@@ -145,7 +145,6 @@ var EINSTEIN_SERVICE = (function(){
             response.answer = finalAnswer;
         } else {
             context = string;
-            console.log("Set Context: "+context);
         }
         return response;
 
