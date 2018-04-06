@@ -6,9 +6,9 @@ var EINSTEIN_NLP = (function(){
      * @param {*} string 
      */
     function parse(string){
-        var arrMetrics = ['speed','distance','time'];
-        var arrQuestions = ['what','how'];
-        var arrUnits = ['meter','km','sec','seconds','hours','hour'];
+        var arrMetrics = CONSTANTS.NLP_METRICS;
+        var arrQuestions = CONSTANTS.NLP_QUESTIONS;
+        var arrUnits = CONSTANTS.NLP_UNITS;
         
         inputString = string;
 
