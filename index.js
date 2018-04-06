@@ -19,7 +19,8 @@ var MOCK_INPUTS = [
   "What is the area of circle with radius 5 meter",
   "What is the perimeter of square of side 5 meter",
   "what is the perimeter of rectangle of length 5 meter and width 6 meter",
-  "what is the circumference of circle of radius 5 cm"
+  "what is the circumference of circle of radius 5 cm",
+  "What is the power loss when voltage is 5 volts and current passed is 6 amp"
 ]
 
 var firebaseDB = firebase.database();
@@ -56,7 +57,7 @@ express()
   .get('/execute', function(req, res){
     return new Promise((resolve, reject) => {
         // Call to your Service
-        var request = MOCK_INPUTS[7];
+        var request = MOCK_INPUTS[8];
         var data = EINSTEIN_ENGINE.execute(request);
 
         // To send response back

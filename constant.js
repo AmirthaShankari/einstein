@@ -30,9 +30,9 @@ var CONSTANTS = {
         }
     },
 
-    NLP_METRICS : ['speed','distance','time'],
+    NLP_METRICS : ['speed','distance','time','power'],
     NLP_QUESTIONS : ['what','how',"what's"],
-    NLP_UNITS : ['mtr','km','sec','seconds','hr','minutes','cm'],
+    NLP_UNITS : ['mtr','km','sec','seconds','hr','minutes','cm','volt','amp'],
     NLP_SHAPES : ['circle','rectangle','square'],
     NLP_SURFACEAREA : ['area','perimeter','circumference'],
     NLP_SHAPESPARAM : ['side','radius','length','width'],
@@ -42,7 +42,9 @@ var CONSTANTS = {
         "hr": ["hour", "hours"],
         "minutes": ["minute"],
         "seconds": ["sec","second"],
-        "cm" : ["cms","centimeter","centimetres","centimeters"]
+        "cm" : ["cms","centimeter","centimetres","centimeters"],
+        "volt" : ['volts'],
+        "amp" : ['ampere','amps','amperes']
     },    
 
     METRIC_GROUP : {
