@@ -68,6 +68,8 @@ var einstein = angular.module('einstein',[])
         }).
         then(function(result) {
             $scope.search.result = result.data;
+            var msg = new SpeechSynthesisUtterance($scope.search.result.answer);
+            window.speechSynthesis.speak(msg);
         }, function(err){
            console.log(err);
         })
@@ -77,5 +79,5 @@ var einstein = angular.module('einstein',[])
         $scope.search.data = "what is the speed taken to cover a distance of 200 km in time of 2 hours";
         $scope.processData();
     }
-
+    
 });
