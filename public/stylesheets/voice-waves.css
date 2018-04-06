@@ -1,19 +1,22 @@
 
 .frame {
   position: relative;
-  width: 200px;
-  height: 200px;
-  background: #0052CC;
+  width: 250px;
+  height: 250px;
+  background: transparent;
+  margin-top: -70px;
 }
 
 .dot-1 {
   position: absolute;
   z-index: 3;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   top: 95px;
   left: 95px;
-  background: #ff0000;
+  font-size: 40px;
+  padding: 11px;
+  background: #f49393;
   border-radius: 50%;
   -webkit-animation-fill-mode: both;
           animation-fill-mode: both;
@@ -24,8 +27,8 @@
 .dot-2 {
   position: absolute;
   z-index: 2;
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 90px;
   top: 80px;
   left: 80px;
   background: #ff3333;
@@ -39,8 +42,8 @@
 .dot-3 {
   position: absolute;
   z-index: 1;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   top: 65px;
   left: 65px;
   background: #ff6666;

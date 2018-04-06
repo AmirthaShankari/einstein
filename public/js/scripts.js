@@ -30,12 +30,14 @@ var einstein = angular.module('einstein',[])
         }
         final_transcript = final_transcript;
         $scope.search.data = interim_transcript;
+        document.getElementById("question").innerHTML = interim_transcript;
         $scope.search.data = final_transcript;
         console.log(interim_transcript);
         console.log(final_transcript);
         $scope.$apply();
         if(final_transcript){
-            processData();
+            document.getElementById("question").innerHTML = final_transcript;
+            $scope.processData();
             console.log("Ended");
         }
 
@@ -56,7 +58,7 @@ var einstein = angular.module('einstein',[])
     /**
     * Function to Process Data
     */
-    function processData(){
+    $scope.processData = function(){
         $http({
             method: "POST",
             url: "http://localhost:5000/execute",
@@ -65,10 +67,15 @@ var einstein = angular.module('einstein',[])
             }
         }).
         then(function(result) {
-            r = result;
+            $scope.search.result = result.data;
         }, function(err){
            console.log(err);
         })
+    }
+
+    $scope.testData = function(){
+        $scope.search.data = "what is the speed taken to cover a distance of 200 km in time of 2 hours";
+        $scope.processData();
     }
 
 });

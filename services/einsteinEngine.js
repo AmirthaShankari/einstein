@@ -20,11 +20,8 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 3: Calculate Result
     var calculateResult = function(computationObj, computationGroup){
-       // console.log(computationGroup);
         var formula =  CONSTANTS.FORMULAS[computationGroup].formula[computationObj.output.metric];
-       // console.log(computationObj.input);
-        console.log(formula);
-        return formula(computationObj.input)
+        return formula(computationObj.input, computationObj.output)
     }
 
     // Step 2: Find Computation Group
@@ -123,7 +120,7 @@ var EINSTEIN_SERVICE = (function(){
     // Step 0: Execute
     var execute = function(string){
         var response = {};
-        string = "what is the speed of the train if it is travelling at a distance of 10 kilometre in 2 hours";
+       // string = "what is the speed of the train if it is travelling at a distance of 10 km in 2 hours";
         
         var computationObj = processInput(string);
         console.log(computationObj);

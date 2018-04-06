@@ -3,28 +3,28 @@ var CONSTANTS = {
         "sdt" : {
             "group" : ["speed", "distance", "time"],
             "formula" : {
-                "speed" : function(input){
-                    return input["distance"].value/input["time"].value;
+                "speed" : function(input, output){
+                    return input["distance"].value/input["time"].value + " " + output.unit;
                 },
-                "distance" : function(input){
-                    return input["speed"].value * input["time"].value;
+                "distance" : function(input, output){
+                    return input["speed"].value * input["time"].value + " " + output.unit;
                 },
-                "time" : function(input){
-                    return input["distance"].value / input["speed"].value;
+                "time" : function(input, output){
+                    return input["distance"].value / input["speed"].value + " " + output.unit;
                 }
             }
         },
         "pwt" : {
             "group" : ["power", "work", "time"],
             "formula" : {
-                "power" : function(input){
-                    return input["work"].value/input["time"].value;
+                "power" : function(input, output){
+                    return input["work"].value/input["time"].value + " " + output.unit;
                 },
                 "work" : function(input){
-                    return input["power"].value * input["time"].value;
+                    return input["power"].value * input["time"].value + " " + output.unit;
                 },
                 "time" : function(input){
-                    return input["work"].value / input["power"].value;
+                    return input["work"].value / input["power"].value + " " + output.unit;
                 }
             }
         }

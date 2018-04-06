@@ -4,31 +4,33 @@
         <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <link rel = "stylesheet" href = "/stylesheets/main.css">
         <link rel = "stylesheet" href = "/stylesheets/voice-waves.css">
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+        <link rel = "stylesheet" href = "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     </head>
     <body>
         <div id = "wrapper" ng-controller = "einsteinController">
             <div id = "header-wrap">
-                <span class = "einstein-title">
-                    Einstein
+                <span class = "einstein-title font-color">
+                    E I N S T E I N
                 </span>
             </div>
             <div id = "interface-section">
                 <div class = "mike-area" style = "height: 200px">
                     <div class = "record-btn" ng-click = "startRecognition()" ng-if = "isRecord == false">
-                        <img src="/images/voice-recorder.png" width="200px" height="200px" />
+                        <i class = "icon ion-ios-mic"></i>
                     </div>
                     <div class = "frame" ng-if = "isRecord == true">
-                      <div class = "dot-1"></div>
+                      <div class = "dot-1"><i class = "icon ion-ios-mic"></i></div>
                       <div class = "dot-2"></div>
                       <div class ="dot-3"></div>
                     </div>
                 </div>
 
-                <textarea>{{search.data}}</textarea>
+                <div class = "question font-color" id = "question">{{search.data}}</div>
+                <!-- <button ng-click = "testData()">Test</button> -->
             </div>
-            <div id = "solution-section">
-                {{search.result}}
+            <div class = "solution-section font-color" ng-if = "search.result.answer">
+                {{search.result.answer}}
             </div>
         </div>
         <script type = "text/javascript" src = "/js/scripts.js"></script>
