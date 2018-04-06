@@ -59,10 +59,23 @@ express()
         res.send(data);
         // To resolve the Promise
         resolve();
-        
     }); 
-})
+  })
 
+  .post('/execute', function(req, res){
+    return new Promise((resolve, reject) => {
+        // Call to your Service
+        console.log("Sample");
+        console.log("Called", req.body);
+        var request = req.body.q;
+        var data = EINSTEIN_ENGINE.execute(request);
+
+        // To send response back
+        res.send(data);
+        // To resolve the Promise
+        resolve();
+    }); 
+  })
 
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))

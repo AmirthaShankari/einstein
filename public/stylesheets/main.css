@@ -1,27 +1,61 @@
-.jumbotron {
-  background: #532F8C;
-  color: white;
-  padding-bottom: 80px; }
-  .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
-    .jumbotron .btn-primary:hover {
-      background: #7646c1; }
-  .jumbotron p {
-    color: #d9ccee;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .navbar + .jumbotron {
-    margin-top: -20px; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #B01302;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; }
+/**** Start: universal selector ****/
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Lato', sans-serif;
+}
+/**** End: universal selector ****/
 
+#wrapper{
+	width: 100%;
+}
+
+#header-wrap {
+	height: 10%;
+	color: #0052CC;
+	padding: 2% 3%;
+	font-size: 36px;
+}
+/**** Start: Voice Interface section ****/
+#interface-section{
+	background: #0052CC;
+	height: 65%;
+	color: #fff;
+	text-align: center;
+	padding: 20px;
+}
+#interface-section img{
+	width: 120px;
+	height: 120px;
+}
+textarea{
+	width: 80%;
+	height: 100px;
+	margin: 0 auto;
+	outline: none;
+	border: none;
+	resize: none;
+	display: block;
+	background: none;
+	margin-top: 3%;
+	font-size: 30px;
+	text-align: center;
+	overflow-y: scroll;
+}
+/**** End: Voice Interface section ****/
+#solution-section{
+	color: #0052CC;
+}
+
+.frame{
+	margin: 0 auto;
+}
+.record-btn{
+	border: 1px solid #fff;
+	border-radius: 50%;
+	height: 200px;
+	width: 200px;
+	margin: 0 auto;
+	padding: 35px;
+}
