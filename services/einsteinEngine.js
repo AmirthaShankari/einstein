@@ -36,24 +36,52 @@ var EINSTEIN_SERVICE = (function(){
         }
         let flag = true;
         let result = "";
+        let missingValues = [];
+        let report = {
+            "isMissing": [],
+            "missingData": {},
+            "data": {}
+        }
         for (let key in CONSTANTS.FORMULAS) {
             do{
                 flag = true;
-                checkList.forEach(function(element) { 
-                    if (CONSTANTS.FORMULAS[key].group.includes(element)) {
+                for(let i = 0; i < checkList.length; i++){
+                    if (CONSTANTS.FORMULAS[key].group.includes(checkList[i])) {
                         result = key;
-                    }else{
+                    } else {
                         flag = false;
+                        break;
                     }
-                });
+                }
+                if(flag){
+                    if(CONSTANTS.FORMULAS[key].group.length != checkList.length){
+                        missingValues = reportMissingValues(result, checkList);
+                        report.isMissing = true;
+                        report.missingData = missingValues;
+                    } else {
+                        report.isMissing = false;
+                        report.data = result;
+                    }
+                }
             }while(!flag);
-            return result;
+            console.log("report:");
+            console.log(report);
+            return report;
         }
+    }
+
+    var reportMissingValues = function(key, checkList){
+        let missingElements = [];
+        CONSTANTS.FORMULAS[key].group.forEach(function(element) {
+            if(!checkList.includes(element)){
+                missingElements.push(element);
+            }
+        });
+        return missingElements;
     }
 
     // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
-        console.log(computationObj);
         let output = getMetricGroupName(computationObj.output.metric)
         let newComputationObj = {
             "output": {
@@ -96,12 +124,19 @@ var EINSTEIN_SERVICE = (function(){
         var computationObj = obj;
         var computationObj = processInput(string);
         console.log("parsing success");
-        console.log(computationObj);
         computationObj = convertToBaseMetric(computationObj);
         console.log("conversion success");
-        var computationGroup = findComputationGroup(computationObj);
-        var result = calculateResult(computationObj, computationGroup);
-        console.log(result);
+        var computationGroup = {};
+        var result = findComputationGroup(computationObj);
+        if(result.isMissing){
+            //console.log("Missing Values are:"+result.missingData);
+            //TODO functionality to obtain Missing Values 
+        }else{
+            computationGroup = result.data;
+            var result = calculateResult(computationObj, computationGroup);
+            console.log(result);
+        }
+        
     }
 
     return{
