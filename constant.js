@@ -30,13 +30,13 @@ var CONSTANTS = {
         }
     },
 
-    METRIC_GROUP = {
+    METRIC_GROUP : {
         "distance": ["meter", "km", "miles"],
         "speed": ["km per hour", "meter per second", "knots"],
         "time": ["seconds", "minutes", "hours"],
     },
-    
-    METRIC_CONVERTION = {
+
+    METRIC_CONVERTION : {
         "distance": {
             "base": "km",
             "convertions": {

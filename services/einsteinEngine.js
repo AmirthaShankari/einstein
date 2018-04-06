@@ -4,23 +4,23 @@ var EINSTEIN_SERVICE = (function(){
     
     var obj = {
         "output" : {
-            "metric" : "speed",
-            "unit" : "kmph"
+            "metric" : "speed"
         },
         "input":{
             "distance" : {
                 "value": 50,
-                "unit" : "km"
+                "unit" : "meter"
             },
             "time" : {
                 "value": 2,
-                "unit" : "hr"
+                "unit" : "hours"
             }
         }
     }
 
     // Step 3: Calculate Result
     var calculateResult = function(computationObj, computationGroup){
+        console.log(computationGroup);
         var formula =  CONSTANTS.FORMULAS[computationGroup].formula[computationObj.output.metric];
         console.log(computationObj.input);
         console.log(formula);
@@ -29,6 +29,7 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 2: Find Computation Group
     var findComputationGroup = function(obj){
+        console.log(obj);
         let checkList = [];
         checkList.push(obj.output.metric);
         for (let k in obj.input) {
@@ -93,7 +94,7 @@ var EINSTEIN_SERVICE = (function(){
     var execute = function(string){
         var computationObj = obj;
         // var computationObj = processInput(string);
-        // computationObj = convertToBaseMetric(computationObj)
+       // computationObj = convertToBaseMetric(computationObj)
         var computationGroup = findComputationGroup(computationObj);
         var result = calculateResult(computationObj, computationGroup);
         console.log(result);
