@@ -9,6 +9,9 @@ var EINSTEIN_NLP = (function(){
         var arrMetrics = CONSTANTS.NLP_METRICS;
         var arrQuestions = CONSTANTS.NLP_QUESTIONS;
         var arrUnits = CONSTANTS.NLP_UNITS;
+        var arrShapes = CONSTANTS.NLP_SHAPES;
+        var arrSurfaceArea = CONSTANTS.NLP_SURFACEAREA;
+        var arrShapeParams = CONSTANTS.NLP_SHAPESPARAM;
         
         inputString = string;
 
@@ -17,14 +20,17 @@ var EINSTEIN_NLP = (function(){
         //Flags for parsing
         var isMetric = false;
         var isQuestion = false;
-        var isValueExpected = false;
-        var isUnitExpected = false;
         var isValue = false;
         var isUnit = false;
+        var isShape = false;
+        var isSurfaceArea = false;
+        var isValueExpected = false;
+        var isUnitExpected = false;
+        var isShapeExpected = false;
         
         //Parse the input string to array
         var parsedInput = inputString.split(" ");
-        var computationObject = { output : {},input : []};   
+        var computationObject = { output : {}, input : [], shape : null};   
 
         //Parse the input array - BEGIN
         for(let i = 0; i < parsedInput.length; i++){
@@ -42,9 +48,12 @@ var EINSTEIN_NLP = (function(){
                 //Look for unit
                 isUnit = true;
             }else if(!isNaN(parseFloat(parsedInput[i])) && isFinite(parsedInput[i])){
-                console.log(parsedInput[i]);
                 isUnitExpected = true;
                 var tempInputValue = parsedInput[i];
+            }else if(isQuestion && arrSurfaceArea.indexOf(parsedInput[i].toLowerCase()) >= 0){
+               isSurfaceArea = true;
+            }else if(isShapeExpected && arrShapes.indexOf(parsedInput[i].toLowerCase()) >=0 ){
+                isShape = true;
             }else{
                 continue;
             }
@@ -65,7 +74,6 @@ var EINSTEIN_NLP = (function(){
                 
                 if(tempInputValue !== undefined || tempInputValue !== null){
 
-                   //  console.log(parsedInput[i]);
                     inputDetail.unit = parsedInput[i];
                     inputDetail.value = tempInputValue;
                     tempInputValue = null;
@@ -95,14 +103,21 @@ var EINSTEIN_NLP = (function(){
                     //Fecting the complete unit detail -- END
                     //Associate the value to input metric -- BEGIN
                     if(tempInputValue !== null){
-                    //Handling only numbers without metric
-                    // console.log("entering" + tempInputValue) ;
-                    let inputDetail = {};
-                    inputDetail.metric = metricUnit;
-                    inputDetail.unit = metricUnit;
-                    inputDetail.value = tempInputValue;
-                    computationObject.input.push(inputDetail);
-
+                        //Handling only numbers without metric
+                        if(arrShapeParams.indexOf(parsedInput[i - 2]) >= 0){
+                            let inputDetail = {};
+                            inputDetail.metric = parsedInput[i - 2];
+                            //let inputMetric = computationObject.input.pop();
+                            inputDetail.unit = metricUnit;
+                            inputDetail.value = tempInputValue;
+                            computationObject.input.push(inputDetail);
+                        }else{
+                            let inputDetail = {};
+                            inputDetail.metric = metricUnit;
+                            inputDetail.unit = metricUnit;
+                            inputDetail.value = tempInputValue;
+                            computationObject.input.push(inputDetail);
+                        }
                     }else{           
                     let inputMetric = computationObject.input.pop();
                     inputMetric.unit = metricUnit;
@@ -111,6 +126,19 @@ var EINSTEIN_NLP = (function(){
                 
                 isUnit = false
                 isUnitExpected = false;
+            }else if(isSurfaceArea){
+                //Setting of output metrics -- BEGIN
+                computationObject.output.metric = parsedInput[i];
+                isQuestion = false;
+                isSurfaceArea = false;
+                isShapeExpected = true;
+                //Setting of output metrics -- END
+
+            }else if(isShape){
+                //Setting input metric for shape
+                computationObject.shape = parsedInput[i];
+                isShape = false;
+                isShapeExpected = false;
             }
             //Setting of computationObject-- END
         }
@@ -118,9 +146,11 @@ var EINSTEIN_NLP = (function(){
         return compObject;           
     }
 
+    //Format the computational object for math Operation.
     function formatComputationalObject(compObject){
-        var formattedObject = {input : {}, output : {}};
-         formattedObject.output.metric = compObject.output.metric;
+        var formattedObject = {input : {}, output : {}, shape : null};
+        formattedObject.output.metric = compObject.output.metric;
+        formattedObject.shape = compObject.shape;
          for(let i = 0; i < compObject.input.length; i++){
              let metricDetail = compObject.input[i];
              formattedObject.input[metricDetail.metric] = {
