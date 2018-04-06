@@ -13,7 +13,7 @@ var EINSTEIN_NLP = (function(){
         inputString = string;
 
         console.log(inputString);
-        
+
         //Flags for parsing
         var isMetric = false;
         var isQuestion = false;
@@ -24,7 +24,6 @@ var EINSTEIN_NLP = (function(){
         
         //Parse the input string to array
         var parsedInput = inputString.split(" ");
-        console.log(parsedInput);
         var computationObject = { output : {},input : []};   
 
         //Parse the input array - BEGIN
@@ -66,7 +65,7 @@ var EINSTEIN_NLP = (function(){
                 
                 if(tempInputValue !== undefined || tempInputValue !== null){
 
-                    console.log(parsedInput[i]);
+                   //  console.log(parsedInput[i]);
                     inputDetail.unit = parsedInput[i];
                     inputDetail.value = tempInputValue;
                     tempInputValue = null;
@@ -88,7 +87,7 @@ var EINSTEIN_NLP = (function(){
                     //Associate the value to input metric -- BEGIN
                     if(tempInputValue !== null){
                     //Handling only numbers without metric
-                    console.log("entering" + tempInputValue) ;
+                    // console.log("entering" + tempInputValue) ;
                     let inputDetail = {};
                     inputDetail.metric = parsedInput[i];
                     inputDetail.unit = parsedInput[i];
@@ -105,14 +104,12 @@ var EINSTEIN_NLP = (function(){
                 isUnitExpected = false;
             }
             //Setting of computationObject-- END
-
         }
-        console.log(computationObject);
-        //Parse the input array - END              
+        let compObject = formatComputationalObject(computationObject);
+        return compObject;           
     }
 
     function formatComputationalObject(compObject){
-        console.log("Entering Computational object");
         var formattedObject = {input : {}, output : {}};
          formattedObject.output.metric = compObject.output.metric;
          for(let i = 0; i < compObject.input.length; i++){
@@ -122,7 +119,7 @@ var EINSTEIN_NLP = (function(){
                  "value" : metricDetail.value
              }
          }
-         console.log(formattedObject);
+         return formattedObject;
     }
     
     return{
