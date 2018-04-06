@@ -1,5 +1,6 @@
 var CONSTANTS = require('./../constant.js');
 var EINSTEIN_NLP = require('./einsteinNLP.js');
+
 var EINSTEIN_SERVICE = (function(){
     
     var obj = {
@@ -17,6 +18,7 @@ var EINSTEIN_SERVICE = (function(){
             }
         }
     }
+    var context = null;
 
     // Step 3: Calculate Result
     var calculateResult = function(computationObj, computationGroup){
@@ -31,6 +33,7 @@ var EINSTEIN_SERVICE = (function(){
         for (let k in obj.input) {
             checkList.push(k);
         }
+        console.log(checkList);
         let flag = true;
         let result = "";
         let missingValues = [];
@@ -39,7 +42,8 @@ var EINSTEIN_SERVICE = (function(){
             "missingData": {},
             "data": {}
         }
-        for (let key in CONSTANTS.FORMULAS) {
+        
+        for (let key in CONSTANTS.FORMULAS) {    
             do{
                 flag = true;
                 for(let i = 0; i < checkList.length; i++){
@@ -80,7 +84,7 @@ var EINSTEIN_SERVICE = (function(){
     // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
         let output = getMetricGroupName(computationObj.output.metric);
-        console.log(output);
+        console.log(CONSTANTS.METRIC_CONVERTION[output].base);
         let newComputationObj = {
             "output": {
                 "metric" : output,
@@ -92,6 +96,7 @@ var EINSTEIN_SERVICE = (function(){
             let input = getMetricGroupName(key);
             let unit = computationObj.input[key].unit;
             let val = computationObj.input[key].value;
+            console.log("input:unit:val "+input+":"+unit+":"+val);
             if(CONSTANTS.METRIC_CONVERTION[input].base != unit) {
                 let valueFunction = CONSTANTS.METRIC_CONVERTION[input].convertions[unit];
                 val = valueFunction(computationObj.input[key].value);
@@ -113,15 +118,19 @@ var EINSTEIN_SERVICE = (function(){
     }
 
     // Step 1: Process Input
-    var processInput = function(string){
-        return EINSTEIN_NLP.parse(string);
+    var processInput = function(string,isContext){
+        return EINSTEIN_NLP.parse(string,isContext);
     }
 
     // Step 0: Execute
     var execute = function(string){
         var response = {};
        // string = "what is the speed of the train if it is travelling at a distance of 10 km in 2 hours";
-        
+        console.log("context: "+context);
+        if(context!=null){
+            string = context + string;
+            console.log("string: "+string);
+        }
         var computationObj = processInput(string);
         console.log(computationObj);
         computationObj = convertToBaseMetric(computationObj);
@@ -134,9 +143,12 @@ var EINSTEIN_SERVICE = (function(){
             computationGroup = result.data;
             var finalAnswer = calculateResult(computationObj, computationGroup);
             response.answer = finalAnswer;
+        } else {
+            context = string;
+            console.log("Set Context: "+context);
         }
         return response;
-        
+
     }
 
     return{

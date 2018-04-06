@@ -14,25 +14,25 @@ var CONSTANTS = {
                 }
             }
         },
-        "pwt" : {
-            "group" : ["power", "work", "time"],
+        "pvc" : {
+            "group" : ["power", "voltage", "current"],
             "formula" : {
                 "power" : function(input, output){
-                    return input["work"].value/input["time"].value + " " + output.unit;
+                    return input["voltage"].value * input["current"].value + " " + output.unit;
                 },
-                "work" : function(input){
-                    return input["power"].value * input["time"].value + " " + output.unit;
+                "voltage" : function(input, output){
+                    return input["power"].value / input["current"].value + " " + output.unit;
                 },
-                "time" : function(input){
-                    return input["work"].value / input["power"].value + " " + output.unit;
+                "current" : function(input, output){
+                    return input["power"].value / input["voltage"].value + " " + output.unit;
                 }
             }
         }
     },
 
-    NLP_METRICS : ['speed','distance','time','power'],
+    NLP_METRICS : ['speed','distance','time','power','voltage','current'],
     NLP_QUESTIONS : ['what','how',"what's"],
-    NLP_UNITS : ['mtr','km','sec','seconds','hr','minutes','cm','volt','amp'],
+    NLP_UNITS : ['mtr','km','sec','seconds','hr','minutes','cm','volt','amps'],
     NLP_SHAPES : ['circle','rectangle','square'],
     NLP_SURFACEAREA : ['area','perimeter','circumference'],
     NLP_SHAPESPARAM : ['side','radius','length','width'],
@@ -44,20 +44,24 @@ var CONSTANTS = {
         "seconds": ["sec","second"],
         "cm" : ["cms","centimeter","centimetres","centimeters"],
         "volt" : ['volts'],
-        "amp" : ['ampere','amps','amperes']
+        "amps" : ['ampere','amp','amperes'],
+        "watt": ['watts']
     },    
 
     METRIC_GROUP : {
-        "distance": ["meter", "km", "miles"],
-        "speed": ["km per hour", "meter per second", "knots"],
-        "time": ["seconds", "minutes", "hours"],
+        "distance": ["mtr", "km", "miles"],
+        "speed": ["km per hour", "mtr per second", "knots"],
+        "time": ["seconds", "minutes", "hr"],
+        'power': ["watt"],
+        'voltage': ["volt"],
+        'current': ["amps"]
     },
 
     METRIC_CONVERTION : {
         "distance": {
             "base": "km",
             "convertions": {
-                "meter": function(value){
+                "mtr": function(value){
                     return value*0.001;
                 },
                 "miles": function(value){
@@ -68,7 +72,7 @@ var CONSTANTS = {
         "speed": {
             "base": "km per hour",
             "convertions": {
-                "meter per second": function(value){
+                "mtr per second": function(value){
                     return value*3.6;
                 },
                 "knots": function(value){
@@ -77,7 +81,7 @@ var CONSTANTS = {
             }
         },
         "time": {
-            "base": "hours",
+            "base": "hr",
             "convertions": {
                 "minutes": function(value){
                     return value * 0.0166667;
@@ -86,6 +90,18 @@ var CONSTANTS = {
                     return value * 0.000277778;
                 }
             }
+        },
+        "power": {
+            "base": "watt",
+            "convertions": {}
+        },
+        "voltage": {
+            "base": "volt",
+            "convertions": {}
+        },
+        "current": {
+            "base": "amps",
+            "convertions": {}
         }
     }
 };
