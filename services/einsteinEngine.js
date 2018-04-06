@@ -29,7 +29,6 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 2: Find Computation Group
     var findComputationGroup = function(obj){
-        console.log(obj);
         let checkList = [];
         checkList.push(obj.output.metric);
         for (let k in obj.input) {
@@ -38,15 +37,16 @@ var EINSTEIN_SERVICE = (function(){
         let flag = true;
         let result = "";
         for (let key in CONSTANTS.FORMULAS) {
-            checkList.forEach(function(element) { 
-                if (CONSTANTS.FORMULAS[key].group.includes(element)) {
-                    result = key;
-                }else{
-                    flag = false;
-                }
-            });
-        }
-        if(flag){
+            do{
+                flag = true;
+                checkList.forEach(function(element) { 
+                    if (CONSTANTS.FORMULAS[key].group.includes(element)) {
+                        result = key;
+                    }else{
+                        flag = false;
+                    }
+                });
+            }while(!flag);
             return result;
         }
     }
@@ -94,7 +94,7 @@ var EINSTEIN_SERVICE = (function(){
     var execute = function(string){
         var computationObj = obj;
         // var computationObj = processInput(string);
-       // computationObj = convertToBaseMetric(computationObj)
+        computationObj = convertToBaseMetric(computationObj)
         var computationGroup = findComputationGroup(computationObj);
         var result = calculateResult(computationObj, computationGroup);
         console.log(result);
