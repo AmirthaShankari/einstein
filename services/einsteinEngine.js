@@ -127,9 +127,10 @@ var EINSTEIN_SERVICE = (function(){
         var response = {};
        // string = "what is the speed of the train if it is travelling at a distance of 10 km in 2 hours";
         console.log("context: "+context);
-        if(context!=null){
+        if(context != null){
             string = context + string;
             console.log("string: "+string);
+            context = null;
         }
         var computationObj = processInput(string);
         console.log(computationObj);
