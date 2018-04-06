@@ -82,7 +82,8 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 1A: Convert to Base Metric Input
     var convertToBaseMetric = function(computationObj){
-        let output = getMetricGroupName(computationObj.output.metric)
+        let output = getMetricGroupName(computationObj.output.metric);
+        console.log(output);
         let newComputationObj = {
             "output": {
                 "metric" : output,
@@ -121,21 +122,23 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 0: Execute
     var execute = function(string){
-        var computationObj = obj;
+        var response = {};
+        string = "what is the speed of the train if it is travelling at a distance of 10 kilometre in 2 hours";
+        
         var computationObj = processInput(string);
         console.log(computationObj);
         computationObj = convertToBaseMetric(computationObj);
+        console.log("After Base");
         console.log(computationObj);
         var computationGroup = {};
         var result = findComputationGroup(computationObj);
-        if(result.isMissing){
-            //console.log("Missing Values are:"+result.missingData);
-            //TODO functionality to obtain Missing Values 
-        }else{
+        response.metadata = result;
+        if(!result.isMissing){
             computationGroup = result.data;
-            var result = calculateResult(computationObj, computationGroup);
-            console.log(result);
+            var finalAnswer = calculateResult(computationObj, computationGroup);
+            response.answer = finalAnswer;
         }
+        return response;
         
     }
 
