@@ -1,6 +1,23 @@
 var CONSTANTS = require('./../constant.js');
 
 var EINSTEIN_NLP = (function(){
+
+    function normalizeInputString(inputString){
+        
+        //Parse the input string to array and normalize the units
+        var parsedInput = inputString.split(" ");
+        var arrBaseUnits = CONSTANTS.NLP_BASEUNITS;
+        var computationObject = { output : {}, input : [], shape : null};  
+        for(let i = 0; i < parsedInput.length; i++){
+            for(key in arrBaseUnits){
+                if(arrBaseUnits[key].indexOf(parsedInput[i].toLowerCase()) >= 0){
+                    parsedInput[i] = key;
+                }
+            }
+        }
+        return parsedInput;
+
+    }
     /**
      * parse
      * @param {*} string 
@@ -29,7 +46,7 @@ var EINSTEIN_NLP = (function(){
         var isShapeExpected = false;
         
         //Parse the input string to array
-        var parsedInput = inputString.split(" ");
+        var parsedInput = normalizeInputString(inputString);;
         var computationObject = { output : {}, input : [], shape : null};   
 
         //Parse the input array - BEGIN
@@ -105,9 +122,9 @@ var EINSTEIN_NLP = (function(){
                     if(tempInputValue !== null){
                         //Handling only numbers without metric
                         if(arrShapeParams.indexOf(parsedInput[i - 2]) >= 0){
+                            //Handling Inputs for shapes
                             let inputDetail = {};
                             inputDetail.metric = parsedInput[i - 2];
-                            //let inputMetric = computationObject.input.pop();
                             inputDetail.unit = metricUnit;
                             inputDetail.value = tempInputValue;
                             computationObject.input.push(inputDetail);
