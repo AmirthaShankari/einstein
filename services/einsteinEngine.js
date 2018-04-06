@@ -1,4 +1,5 @@
 var CONSTANTS = require('./../constant.js');
+var EINSTEIN_NLP = require('./einsteinNLP.js');
 var EINSTEIN_SERVICE = (function(){
     
     var obj = {
@@ -85,7 +86,7 @@ var EINSTEIN_SERVICE = (function(){
 
     // Step 1: Process Input
     var processInput = function(string){
-
+        return EINSTEIN_NLP.parse(string);
     }
 
     // Step 0: Execute
