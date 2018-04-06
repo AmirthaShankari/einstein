@@ -13,13 +13,29 @@ var CONSTANTS = {
                     return input["distance"].value / input["speed"].value;
                 }
             }
+        },
+        "pwt" : {
+            "group" : ["power", "work", "time"],
+            "formula" : {
+                "power" : function(input){
+                    return input["work"].value/input["time"].value;
+                },
+                "work" : function(input){
+                    return input["power"].value * input["time"].value;
+                },
+                "time" : function(input){
+                    return input["work"].value / input["power"].value;
+                }
+            }
         }
     },
+
     METRIC_GROUP = {
         "distance": ["meter", "km", "miles"],
         "speed": ["km per hour", "meter per second", "knots"],
         "time": ["seconds", "minutes", "hours"],
     },
+    
     METRIC_CONVERTION = {
         "distance": {
             "base": "km",
@@ -58,4 +74,3 @@ var CONSTANTS = {
 };
 
 module.exports = CONSTANTS;
-
