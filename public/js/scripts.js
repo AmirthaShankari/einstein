@@ -60,6 +60,7 @@ var einstein = angular.module('einstein',[])
     */
     $scope.processData = function(){
         // $scope.search.data = "what is the speed taken to cover a distance of 200 km";
+        $scope.recognition.stop();
         $http({
             method: "POST",
             url: "http://localhost:5000/execute",
@@ -82,6 +83,9 @@ var einstein = angular.module('einstein',[])
             console.log(msg);
             var msg = new SpeechSynthesisUtterance(speechMsg);
             window.speechSynthesis.speak(msg);
+            setTimeout(function(){
+               $scope.recognition.start();
+            }, 2000);
         }, function(err){
            console.log(err);
         })

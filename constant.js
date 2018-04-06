@@ -4,13 +4,13 @@ var CONSTANTS = {
             "group" : ["speed", "distance", "time"],
             "formula" : {
                 "speed" : function(input, output){
-                    return input["distance"].value/input["time"].value + " " + output.unit;
+                    return Number(input["distance"].value/input["time"].value).toFixed(2) + " " + output.unit;
                 },
                 "distance" : function(input, output){
-                    return input["speed"].value * input["time"].value + " " + output.unit;
+                    return Number(input["speed"].value * input["time"].value).toFixed(2) + " " + output.unit;
                 },
                 "time" : function(input, output){
-                    return input["distance"].value / input["speed"].value + " " + output.unit;
+                    return Number(input["distance"].value / input["speed"].value).toFixed(2) + " " + output.unit;
                 }
             }
         },
@@ -18,13 +18,13 @@ var CONSTANTS = {
             "group" : ["power", "voltage", "current"],
             "formula" : {
                 "power" : function(input, output){
-                    return input["voltage"].value * input["current"].value + " " + output.unit;
+                    return Number(input["voltage"].value * input["current"].value).toFixed(2) + " " + output.unit;
                 },
                 "voltage" : function(input, output){
-                    return input["power"].value / input["current"].value + " " + output.unit;
+                    return Number(input["power"].value / input["current"].value).toFixed(2) + " " + output.unit;
                 },
                 "current" : function(input, output){
-                    return input["power"].value / input["voltage"].value + " " + output.unit;
+                    return Number(input["power"].value / input["voltage"].value).toFixed(2) + " " + output.unit;
                 }
             }
         }
