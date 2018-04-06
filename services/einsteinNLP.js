@@ -8,7 +8,7 @@ var EINSTEIN_NLP = (function(){
     function parse(string){
         var arrMetrics = ['speed','distance','time'];
         var arrQuestions = ['what','how'];
-        var arrUnits = ['meter','km','sec','seconds','hours'];
+        var arrUnits = ['meter','km','sec','seconds','hours','hour'];
         
         inputString = string;
 
@@ -84,19 +84,28 @@ var EINSTEIN_NLP = (function(){
                 isUnitExpected = true;
                 //Associate the value to input metric -- END
             }else if(isUnit){
+                    
+                    let metricUnit;
+                    //Fecting the complete unit detail -- BEGIN
+                    if(parsedInput[i + 1] == "per" && arrUnits.indexOf(parsedInput[i+2]) >= 0){
+                        metricUnit = parsedInput[i] + " " + parsedInput[i+1] + " " + parsedInput[i+2];
+                    }else{
+                        metricUnit = parsedInput[i];
+                    }
+                    //Fecting the complete unit detail -- END
                     //Associate the value to input metric -- BEGIN
                     if(tempInputValue !== null){
                     //Handling only numbers without metric
                     // console.log("entering" + tempInputValue) ;
                     let inputDetail = {};
-                    inputDetail.metric = parsedInput[i];
-                    inputDetail.unit = parsedInput[i];
+                    inputDetail.metric = metricUnit;
+                    inputDetail.unit = metricUnit;
                     inputDetail.value = tempInputValue;
                     computationObject.input.push(inputDetail);
 
-                    }else{
+                    }else{           
                     let inputMetric = computationObject.input.pop();
-                    inputMetric.unit = parsedInput[i];
+                    inputMetric.unit = metricUnit;
                     computationObject.input.push(inputMetric);
                     }
                 

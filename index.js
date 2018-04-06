@@ -14,7 +14,8 @@ firebase.initializeApp({
 var MOCK_INPUTS = [
   "what is the speed taken to cover a distance of 200 km in time of 2 hours",
   "what is the speed taken to cover a distance of 200 km in 2 hours",
-  "In how much time can i reach a distance of 50 km travel at of 10 km per hour"
+  "In how much time can i reach a distance of 50 km travel at of 10 km per hour",
+  "What should be the speed to cover in 500 km when traveled in 10 hours"
 ]
 
 var firebaseDB = firebase.database();
@@ -51,7 +52,7 @@ express()
   .get('/execute', function(req, res){
     return new Promise((resolve, reject) => {
         // Call to your Service
-        var request = MOCK_INPUTS[1];
+        var request = MOCK_INPUTS[3];
         var data = EINSTEIN_ENGINE.execute(request);
 
         // To send response back
