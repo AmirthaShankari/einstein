@@ -69,6 +69,8 @@ express()
         console.log("Called", req.body);
         var request = req.body.q;
         var data = EINSTEIN_ENGINE.execute(request);
+        console.log("Final Data");
+        console.log(data);
 
         // To send response back
         res.send(data);

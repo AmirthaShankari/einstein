@@ -61,7 +61,7 @@ var einstein = angular.module('einstein',[])
             method: "POST",
             url: "http://localhost:5000/execute",
             data: {
-              "q" : "Hello"
+              "q" : $scope.search.data
             }
         }).
         then(function(result) {

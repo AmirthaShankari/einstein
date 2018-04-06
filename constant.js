@@ -31,7 +31,7 @@ var CONSTANTS = {
     },
 
     NLP_METRICS : ['speed','distance','time'],
-    NLP_QUESTIONS : ['what','how'],
+    NLP_QUESTIONS : ["what","how","what's"],
     NLP_UNITS : ['meter','km','sec','seconds','hours','hour'],
         
 

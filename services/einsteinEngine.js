@@ -123,9 +123,9 @@ var EINSTEIN_SERVICE = (function(){
     var execute = function(string){
         var computationObj = obj;
         var computationObj = processInput(string);
-        console.log("parsing success");
+        console.log(computationObj);
         computationObj = convertToBaseMetric(computationObj);
-        console.log("conversion success");
+        console.log(computationObj);
         var computationGroup = {};
         var result = findComputationGroup(computationObj);
         if(result.isMissing){
