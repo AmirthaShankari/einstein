@@ -30,6 +30,11 @@ var CONSTANTS = {
         }
     },
 
+    NLP_METRICS : ['speed','distance','time'],
+    NLP_QUESTIONS : ['what','how'],
+    NLP_UNITS : ['meter','km','sec','seconds','hours'],
+        
+
     METRIC_GROUP : {
         "distance": ["meter", "km", "miles"],
         "speed": ["km per hour", "meter per second", "knots"],
