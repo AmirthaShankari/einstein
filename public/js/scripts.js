@@ -85,7 +85,7 @@ var einstein = angular.module('einstein',[])
             window.speechSynthesis.speak(msg);
             setTimeout(function(){
                $scope.recognition.start();
-            }, 2000);
+            }, 6000);
         }, function(err){
            console.log(err);
         })
